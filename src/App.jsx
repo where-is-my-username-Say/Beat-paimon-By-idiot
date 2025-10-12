@@ -152,7 +152,19 @@ function App() {
     if (audio) {
       audio.muted = isMuted;
       if (!isMuted) {
-        audio.play().catch(e => console.log("Auto-play prevented:", e));
+        // Attempt to play immediately
+        audio.play().catch(e => {
+          console.log("Auto-play prevented:", e);
+          // If autoplay is prevented, try to play after a user interaction
+          const playOnInteraction = () => {
+            if (audio && !audio.paused) return; // Already playing
+            audio.play().catch(err => console.log("Play on interaction failed:", err));
+            document.removeEventListener('click', playOnInteraction);
+            document.removeEventListener('keydown', playOnInteraction);
+          };
+          document.addEventListener('click', playOnInteraction);
+          document.addEventListener('keydown', playOnInteraction);
+        });
       }
     }
   }, [isMuted, backgroundMusicRef.current]); // Add backgroundMusicRef.current to dependencies to ensure it runs when the ref is set
