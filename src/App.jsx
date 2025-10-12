@@ -149,15 +149,17 @@ function App() {
   // Auto-play music
   useEffect(() => {
     if (backgroundMusicRef.current) {
-      backgroundMusicRef.current.play().catch(e => console.log("Auto-play prevented:", e))
+      backgroundMusicRef.current.muted = isMuted; // Set muted state based on isMuted
+      backgroundMusicRef.current.play().catch(e => console.log("Auto-play prevented:", e));
     }
-  }, [])
+  }, [isMuted]);
   
   // Toggle mute
   const toggleMute = () => {
     if (backgroundMusicRef.current) {
-      backgroundMusicRef.current.muted = !isMuted
-      setIsMuted(!isMuted)
+      const newMutedState = !isMuted;
+      backgroundMusicRef.current.muted = newMutedState;
+      setIsMuted(newMutedState);
     }
   }
   
@@ -194,8 +196,7 @@ function App() {
     const comboTimeout = setTimeout(() => {
       if (Date.now() - lastClickTime > 2000) {
         setCombo(0)
-      }
-    }, 2100)
+      }, 2100)
     return () => clearTimeout(comboTimeout)
   }, [lastClickTime])
   
@@ -206,8 +207,7 @@ function App() {
         const randomEvent = EVENTS[Math.floor(Math.random() * EVENTS.length)]
         setActiveEvent(randomEvent)
         setEventEndTime(Date.now() + randomEvent.duration)
-      }
-    }, 30000) // Check every 30 seconds
+      }, 30000) // Check every 30 seconds
     
     return () => clearInterval(eventInterval)
   }, [activeEvent])
@@ -366,7 +366,6 @@ function App() {
       } else {
         setAutoClickerDamage(prev => prev + 1)
       }
-    }
   }
   
   // Wheel spin
