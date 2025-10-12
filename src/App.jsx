@@ -152,22 +152,25 @@ function App() {
     if (audio) {
       audio.muted = isMuted;
       if (!isMuted) {
-        // Attempt to play immediately
         audio.play().catch(e => {
           console.log("Auto-play prevented:", e);
-          // If autoplay is prevented, try to play after a user interaction
-          const playOnInteraction = () => {
-            if (audio && !audio.paused) return; // Already playing
-            audio.play().catch(err => console.log("Play on interaction failed:", err));
-            document.removeEventListener('click', playOnInteraction);
-            document.removeEventListener('keydown', playOnInteraction);
+          const handleUserInteraction = () => {
+            if (audio && audio.paused) {
+              audio.play().catch(err => console.log("Play on interaction failed after user interaction:", err));
+            }
+            document.removeEventListener(\'click\', handleUserInteraction);
+            document.removeEventListener(\'keydown\', handleUserInteraction);
+            document.removeEventListener(\'touchstart\', handleUserInteraction);
           };
-          document.addEventListener('click', playOnInteraction);
-          document.addEventListener('keydown', playOnInteraction);
+          if (e.name === "NotAllowedError") {
+            document.addEventListener(\'click\', handleUserInteraction, { once: true });
+            document.addEventListener(\'keydown\', handleUserInteraction, { once: true });
+            document.addEventListener(\'touchstart\', handleUserInteraction, { once: true });
+          }
         });
       }
     }
-  }, [isMuted, backgroundMusicRef.current]); // Add backgroundMusicRef.current to dependencies to ensure it runs when the ref is set
+  }, [isMuted, backgroundMusicRef.current]);
   
   // Toggle mute
   const toggleMute = () => {
@@ -508,7 +511,7 @@ function App() {
       </video>
       
       {/* Audio */}
-      <audio ref={backgroundMusicRef} src={backgroundMusic} loop />
+      <audio ref={backgroundMusicRef} src={backgroundMusic} autoPlay loop />
       <audio ref={hitSoundRef} src={hitSound} />
       <audio ref={xpSoundRef} src={xpSound} />
       
