@@ -214,7 +214,7 @@ function App() {
   
   // Clear expired events
   useEffect(() => {
-    if (activeEvent && Date.now() > eventEndTime) {
+    if (activeEvent && eventEndTime > 0 && Date.now() > eventEndTime) {
       setActiveEvent(null)
     }
   }, [activeEvent, eventEndTime])
@@ -558,7 +558,7 @@ function App() {
           {/* Active Event Banner */}
           {activeEvent && (
             <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-center py-3 rounded-xl mb-4 font-bold text-lg animate-pulse shadow-2xl">
-              {t.eventActive} {activeEvent.name} ({Math.floor((eventEndTime - Date.now()) / 1000)}s)
+              {t.eventActive} {activeEvent.name} ({eventEndTime > Date.now() ? Math.floor((eventEndTime - Date.now()) / 1000) + 's' : ''})
             </div>
           )}
           
