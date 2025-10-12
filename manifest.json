@@ -1,0 +1,21 @@
+{
+  "name": "Duck Clicker Game",
+  "short_name": "DuckClicker",
+  "description": "A game like Cookie Clicker but the goal is to kill a duck!",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0b669b",
+  "theme_color": "#0b669b",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
