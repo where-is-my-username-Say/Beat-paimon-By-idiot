@@ -6,8 +6,8 @@ import hitSound from './assets/hit_sound.mp3'
 import xpSound from './assets/xp_sound.mp3'
 import duckNormal from './assets/paimon_normal.png'
 import duckHit from './assets/paimon_hit.jpg'
-const duckDead = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/LGKfuXatEFTNswMW.png'
 import backgroundVideo from './assets/new_background.mp4'
+const duckDead = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/LGKfuXatEFTNswMW.png'
 const bossMutated = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/bSJnURVNExTZZjYD.jpg'
 const bossWater = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/VFGFkfgQsmwjcbJy.jpg'
 const bossGhost = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/TmEQFVsJYgQaNGoT.jpg'
@@ -196,7 +196,8 @@ function App() {
     const comboTimeout = setTimeout(() => {
       if (Date.now() - lastClickTime > 2000) {
         setCombo(0)
-      }, 2100)
+      }
+    }, 2100)
     return () => clearTimeout(comboTimeout)
   }, [lastClickTime])
   
@@ -204,10 +205,11 @@ function App() {
   useEffect(() => {
     const eventInterval = setInterval(() => {
       if (!activeEvent && Math.random() < 0.3) {
-        const randomEvent = EVENTS[Math.floor(Math.random() * EVENTS.length)]
-        setActiveEvent(randomEvent)
-        setEventEndTime(Date.now() + randomEvent.duration)
-      }, 30000) // Check every 30 seconds
+        const randomEvent = EVENTS[Math.floor(Math.random() * EVENTS.length)];
+        setActiveEvent(randomEvent);
+        setEventEndTime(Date.now() + randomEvent.duration);
+      }
+    }, 30000) // Check every 30 seconds
     
     return () => clearInterval(eventInterval)
   }, [activeEvent])
@@ -366,6 +368,7 @@ function App() {
       } else {
         setAutoClickerDamage(prev => prev + 1)
       }
+    }
   }
   
   // Wheel spin
