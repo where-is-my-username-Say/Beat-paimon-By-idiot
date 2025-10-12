@@ -442,6 +442,40 @@ function App() {
     if (isHit) return duckHit
     return duckNormal
   }
+
+  // Leaderboard functions
+  const loadLeaderboard = () => {
+    const saved = localStorage.getItem("duckClickerLeaderboard")
+    if (saved) {
+      setLeaderboardData(JSON.parse(saved))
+    }
+  }
+  
+  const submitToLeaderboard = () => {
+    if (!playerName.trim()) {
+      alert(t.enterName)
+      return
+    }
+    
+    const newEntry = {
+      name: playerName.trim(),
+      score: Math.floor(money),
+      kills: totalKills,
+      timestamp: Date.now()
+    }
+    
+    const currentLeaderboard = [...leaderboardData, newEntry]
+    currentLeaderboard.sort((a, b) => b.score - a.score)
+    const topTen = currentLeaderboard.slice(0, 10)
+    
+    setLeaderboardData(topTen)
+    localStorage.setItem("duckClickerLeaderboard", JSON.stringify(topTen))
+    alert("Score submitted!")
+  }
+  
+  useEffect(() => {
+    loadLeaderboard()
+  }, [])
   
   return (
     <div className="min-h-screen relative overflow-hidden" dir={language === 'ar' ? 'rtl' : 'ltr'}>
@@ -714,36 +748,3 @@ function App() {
 export default App
 
 
-  // Leaderboard functions
-  const loadLeaderboard = () => {
-    const saved = localStorage.getItem("duckClickerLeaderboard")
-    if (saved) {
-      setLeaderboardData(JSON.parse(saved))
-    }
-  }
-  
-  const submitToLeaderboard = () => {
-    if (!playerName.trim()) {
-      alert(t.enterName)
-      return
-    }
-    
-    const newEntry = {
-      name: playerName.trim(),
-      score: Math.floor(money),
-      kills: totalKills,
-      timestamp: Date.now()
-    }
-    
-    const currentLeaderboard = [...leaderboardData, newEntry]
-    currentLeaderboard.sort((a, b) => b.score - a.score)
-    const topTen = currentLeaderboard.slice(0, 10)
-    
-    setLeaderboardData(topTen)
-    localStorage.setItem("duckClickerLeaderboard", JSON.stringify(topTen))
-    alert("Score submitted!")
-  }
-  
-  useEffect(() => {
-    loadLeaderboard()
-  }, [])
