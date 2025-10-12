@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import './App.css'
-import newBackgroundMusic from './assets/new_background_music.mp3'
+import backgroundMusic from './assets/background_music.mp3'
 import hitSound from './assets/hit_sound.mp3'
 import xpSound from './assets/xp_sound.mp3'
 import duckNormal from './assets/paimon_normal.png'
@@ -148,11 +148,14 @@ function App() {
   
   // Auto-play music
   useEffect(() => {
-    if (backgroundMusicRef.current) {
-      backgroundMusicRef.current.muted = isMuted; // Set muted state based on isMuted
-      backgroundMusicRef.current.play().catch(e => console.log("Auto-play prevented:", e));
+    const audio = backgroundMusicRef.current;
+    if (audio) {
+      audio.muted = isMuted;
+      if (!isMuted) {
+        audio.play().catch(e => console.log("Auto-play prevented:", e));
+      }
     }
-  }, [isMuted]);
+  }, [isMuted, backgroundMusicRef.current]); // Add backgroundMusicRef.current to dependencies to ensure it runs when the ref is set
   
   // Toggle mute
   const toggleMute = () => {
@@ -493,7 +496,7 @@ function App() {
       </video>
       
       {/* Audio */}
-      <audio ref={backgroundMusicRef} src={newBackgroundMusic} loop />
+      <audio ref={backgroundMusicRef} src={backgroundMusic} loop />
       <audio ref={hitSoundRef} src={hitSound} />
       <audio ref={xpSoundRef} src={xpSound} />
       
