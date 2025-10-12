@@ -6,11 +6,11 @@ import hitSound from './assets/hit_sound.mp3'
 import xpSound from './assets/xp_sound.mp3'
 import duckNormal from './assets/paimon_normal.png'
 import duckHit from './assets/paimon_hit.jpg'
-const duckDead = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/LGKfuXatEFTNswMW.png'
+import duckDead from './assets/paimon_dead.jpg'
 import backgroundVideo from './assets/new_background.mp4'
-const bossMutated = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/bSJnURVNExTZZjYD.jpg'
-const bossWater = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/VFGFkfgQsmwjcbJy.jpg'
-const bossGhost = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663178840581/TmEQFVsJYgQaNGoT.jpg'
+import bossMutated from './assets/boss_mutated_duck.png'
+import bossWater from './assets/boss_water_duck.jpg'
+import bossGhost from './assets/boss_ghost_duck.png'
 
 // Translations
 const translations = {
