@@ -158,9 +158,11 @@ function App() {
             if (audio && audio.paused) {
               audio.play().catch(err => console.log("Play on interaction failed after user interaction:", err));
             }
-            document.removeEventListener(\'click\', handleUserInteraction);
-            document.removeEventListener(\'keydown\', handleUserInteraction);
-            document.removeEventListener(\'touchstart\', handleUserInteraction);
+                        document.removeEventListener('click', handleUserInteraction);
+            document.removeEventListener('keydown', handleUserInteraction);
+            document.removeEventListener('touchstart', handleUserInteraction);
+          };
+
           };
           if (e.name === "NotAllowedError") {
             document.addEventListener(\'click\', handleUserInteraction, { once: true });
