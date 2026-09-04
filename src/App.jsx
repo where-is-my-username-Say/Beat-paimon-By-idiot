@@ -146,7 +146,7 @@ function App() {
   const critUpgradeCost = Math.floor(50 * Math.pow(2, Math.floor(critChance * 10) - 1))
   const autoClickerCost = autoClickerDamage === 0 ? 100 : Math.floor(50 * Math.pow(1.8, autoClickerDamage))
   
-  // Auto-play music
+  // Auto-play music & User interaction fallback
   useEffect(() => {
     const handleUserInteraction = () => {
       if (backgroundMusicRef.current) {
@@ -167,16 +167,6 @@ function App() {
       });
     }
   }, []);
- 
-          if (e.name === "NotAllowedError") {
-            document.addEventListener(\'click\', handleUserInteraction, { once: true });
-            document.addEventListener(\'keydown\', handleUserInteraction, { once: true });
-            document.addEventListener(\'touchstart\', handleUserInteraction, { once: true });
-          }
-        });
-      }
-    }
-  }, [isMuted, backgroundMusicRef.current]);
   
   // Toggle mute
   const toggleMute = () => {
@@ -517,7 +507,7 @@ function App() {
       </video>
       
       {/* Audio */}
-      <audio ref={backgroundMusicRef} src={backgroundMusic} autoPlay loop />
+      <audio ref={backgroundMusicRef} src={backgroundMusic} loop />
       <audio ref={hitSoundRef} src={hitSound} />
       <audio ref={xpSoundRef} src={xpSound} />
       
@@ -772,5 +762,3 @@ function App() {
 }
 
 export default App
-
-
