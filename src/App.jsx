@@ -148,22 +148,26 @@ function App() {
   
   // Auto-play music
   useEffect(() => {
-    const audio = backgroundMusicRef.current;
-    if (audio) {
-      audio.muted = isMuted;
-      if (!isMuted) {
-        audio.play().catch(e => {
-          console.log("Auto-play prevented:", e);
-          const handleUserInteraction = () => {
-            if (audio && audio.paused) {
-              audio.play().catch(err => console.log("Play on interaction failed after user interaction:", err));
-            }
-                        document.removeEventListener('click', handleUserInteraction);
-            document.removeEventListener('keydown', handleUserInteraction);
-            document.removeEventListener('touchstart', handleUserInteraction);
-          };
+    const handleUserInteraction = () => {
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.play().catch(err => console.log("Play on interaction failed:", err));
+      }
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
 
-          };
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.play().catch(e => {
+        if (e.name === "NotAllowedError") {
+          document.addEventListener('click', handleUserInteraction, { once: true });
+          document.addEventListener('keydown', handleUserInteraction, { once: true });
+          document.addEventListener('touchstart', handleUserInteraction, { once: true });
+        }
+      });
+    }
+  }, []);
+ 
           if (e.name === "NotAllowedError") {
             document.addEventListener(\'click\', handleUserInteraction, { once: true });
             document.addEventListener(\'keydown\', handleUserInteraction, { once: true });
